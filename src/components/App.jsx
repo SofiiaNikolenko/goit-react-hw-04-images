@@ -20,34 +20,34 @@ export default function App() {
   const [noResults, setNoResults] = useState(false);
 
   useEffect(() => {
+    const getImg = (value, page) => {
+      fetch(URL + KEY + `&q=${value}&page=${page}`)
+        .then(response => {
+          return response.json();
+        })
+        .then(({ hits }) => {
+          if (hits.length === 0) {
+            setDisabledButton(false);
+            setNoResults(true);
+            notify();
+            return;
+          }
+          setImgs(prevImgs => [...prevImgs, ...hits]);
+          setDisabledButton(true);
+        })
+        .catch(error => {
+          setError(error);
+          setDisabledButton(false);
+        })
+        .finally(() => {
+          setLoader(false);
+        });
+    };
+
     if (value !== '' || page !== 1) {
       getImg(value, page);
     }
-  }, [value, page]);
-
-  const getImg = (value, page) => {
-    fetch(URL + KEY + `&q=${value}&page=${page}`)
-      .then(response => {
-        return response.json();
-      })
-      .then(({ hits }) => {
-        if (hits.length === 0) {
-          setDisabledButton(false);
-          setNoResults(true);
-          notify();
-          return;
-        }
-        setImgs(prevImgs => [...prevImgs, ...hits]);
-        setDisabledButton(true);
-      })
-      .catch(error => {
-        setError(error);
-        setDisabledButton(false);
-      })
-      .finally(() => {
-        setLoader(false);
-      });
-  };
+  }, [value, page, setError]);
 
   const formValue = value => {
     setValue(value);
