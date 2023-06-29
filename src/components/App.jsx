@@ -1,5 +1,4 @@
 import { useState, useEffect } from 'react';
-import React, { Component } from 'react';
 import Searchbar from './Searchbar/Searchbar';
 import ImageGallery from './ImageGallery/ImageGallery';
 import { Button } from './Button/Button';
@@ -16,7 +15,7 @@ export default function App() {
   const [imgs, setImgs] = useState([]);
   const [page, setPage] = useState(1);
   const [disabledButton, setDisabledButton] = useState(false);
-  const [error, setError] = useState('');
+  const [setError] = useState('');
   const [loader, setLoader] = useState(false);
   const [noResults, setNoResults] = useState(false);
 
